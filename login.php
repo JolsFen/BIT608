@@ -13,6 +13,7 @@ include "config.php";
 include "cleaninput.php";
 include "checksession.php";
 
+
 //Get the data and check it before we match it in the database.
 $error = 0; //clear our error flag
 $msg = '';
@@ -36,13 +37,6 @@ if (isset($_POST['submit']) and !empty($_POST['submit']) and ($_POST['submit'] =
         $password = $_POST['password'];
     }
 
-    $stmt = mysqli_stmt_init($db_connection);
-    mysqli_stmt_prepare($stmt, "SELECT customerID, password, admin FROM customer WHERE email=?");
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $customerID, $hashed_password, $admin);
-    mysqli_stmt_fetch($stmt);
-
     //Double check data snip if we have to and clean the input
     if (isset($_POST['username']) and !empty($_POST['username']) and is_string($_POST['username'])) {
         $un = cleanInput($_POST['username']);
@@ -64,14 +58,14 @@ if (isset($_POST['submit']) and !empty($_POST['submit']) and ($_POST['submit'] =
     //data check complete
 
     if ($error == 0) {
-        $query = "SELECT customerID,firstname,lastname,email,password,admin FROM customer WHERE email ='$username'";
+        $query = "SELECT customerID,email,password,admin FROM customer WHERE email ='$username'";
         $result = mysqli_query($db_connection, $query); //prepare the query
         $rowcount = mysqli_num_rows($result);
         if ($rowcount > 0) {
             $row = mysqli_fetch_assoc($result);
             if (password_verify($password, $row['password'])) {
 
-                login($row['admin'], $row['firstname'] . " " . $row['lastname'], $row['customerID']);
+                login($row['admin'], $row['email'] . " " . $row['email'], $row['customerID']);
             } else {
 ?>
                 <script>
