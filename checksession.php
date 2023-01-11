@@ -3,13 +3,13 @@ session_start();
 
 //overrides for development purposes only - comment this out when testing the login
 //$_SESSION['loggedin'] = 1;     
-//$_SESSION['userid'] = 1; //this is the ID for the admin user  
+//$_SESSION['userid'] = 9; //this is the ID for the admin user  
 //$_SESSION['username'] = 'Test';
 //$_SESSION['customerID'] = '21';
 //end of overrides
 
 function isAdmin() {
- if (($_SESSION['loggedin'] == 9) and ($_SESSION['userid'] == 1))
+ if (($_SESSION['loggedin'] == 1) and ($_SESSION['userid'] == 9))
      return true;
  else 
      return false;
