@@ -2,10 +2,10 @@
 session_start();
 
 //overrides for development purposes only - comment this out when testing the login
-//$_SESSION['loggedin'] = 1;     
-//$_SESSION['admin'] = 9; //this is the ID for the admin user  
-//$_SESSION['email'] = '$email';
-//$_SESSION['customerID'] = '$customerID';
+$_SESSION['loggedin'] = 1;     
+$_SESSION['admin'] = 9; //this is the ID for the admin user  
+$_SESSION['email'] = '$email';
+$_SESSION['customerID'] = '$customerID';
 //end of overrides
 
 function isAdmin() {
@@ -36,7 +36,7 @@ function loginStatus() {
 }
 
 //log a user in
-function login($id,$email,$customerID) {
+function login($id,$username,$customerID) {
    //simple redirect if a user tries to access a page they have not logged in to
    if ($_SESSION['loggedin'] == 0 and !empty($_SESSION['URI']))        
         $uri = $_SESSION['URI'];          
@@ -45,10 +45,10 @@ function login($id,$email,$customerID) {
      $uri = $_SESSION['URI'];           
    }  
 
-   $_SESSION['customerID'] =$customerID;        
+   $_SESSION['customerID'] = $customerID;        
    $_SESSION['loggedin'] = 1;   
    $_SESSION['admin'] = $id; 
-   $_SESSION['email'] = $email; 
+   $_SESSION['email'] = $username; 
    $_SESSION['URI'] = ''; 
    header('Location: '.$uri, true, 303);        
 }
