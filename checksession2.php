@@ -56,11 +56,6 @@ function login($id, $username, $customerID)
     $_SESSION['username'] = $username;
     $_SESSION['URI'] = '';
     header('Location: ' . $uri, true, 303);
-
-    //simple redirect if a user tries to access a page they have not logged in to
-
-
-
 }
 
 //simple logout function
