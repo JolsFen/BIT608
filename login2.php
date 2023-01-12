@@ -24,12 +24,18 @@ if (isset($_POST['email']))
 
     //prepare the query and send it to the server
     $stmt = mysqli_stmt_init($db_connection);
-    mysqli_stmt_prepare($stmt, "SELECT customerID, password, admin FROM customer WHERE email=?");
+    mysqli_stmt_prepare($stmt, "SELECT customerID,email,password,admin FROM customer WHERE email=?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $customerID, $email, $hashed_password, $admin);
+    mysqli_stmt_bind_result($stmt, $customerID, $hashed_password, $admin);
     mysqli_stmt_fetch($stmt);
 }
+$username='username';
+$customerID='customerID';
+$email='email';
+$password='password';
+$hashed_password='hashed_password';
+
 //this is where the password is checked
 if(!$customerID)
 {
@@ -47,27 +53,13 @@ else{
         echo '<h2>If you want to make a booking <a href="makeabooking.php">click here</a>.</p>';
         exit(0);
     }
-
     else{
         echo '<h2>Username/password combination is wrong, please try again.</h2>';
-    }
 }
-        if ($admin == 9){
-            echo "<p>Hello admin, you are logged in!</p";
-            header('Location:http//localhost/admin.php');
-            exit();
-        }
-        else if ($admin == 1){
-            echo "<p>Hello customer, you are logged in!</p>";
-            header('Location:http//localhost/home.php');
-            exit();
-        }
-        else {
-            echo "<p>Email/Password combination is wrong!</p>";
-        }
-    
-    mysqli_close($db_connection); //close the connection once done
-    ?>
+    }
+
+mysqli_close($db_connection); //close the connection once done
+?>
 
 <!--Bootstrap Login-->
 <section class="vh-100 gradient-custom" id="customer_login">
